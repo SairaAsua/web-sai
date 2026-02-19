@@ -86,11 +86,11 @@ const DemoClosing = () => {
                         </button>
 
                         <button
-                            onClick={() => window.open('https://sai.altermundi.net', '_blank')}
+                            onClick={() => navigate('/como-funciona')}
                             className="inline-flex items-center gap-2 px-6 py-4 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-montserrat"
                         >
-                            <ExternalLink className="w-4 h-4" />
-                            Visitar sitio SAI
+                            <ArrowRight className="w-4 h-4" />
+                            ¿Cómo funciona el SAI?
                         </button>
                     </motion.div>
                 </motion.div>

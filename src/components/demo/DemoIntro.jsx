@@ -1,17 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Eye, Radio, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const DemoIntro = () => {
     const scrollToAlert = () => {
         document.getElementById('demo-alert')?.scrollIntoView({ behavior: 'smooth' });
     };
-
-    const features = [
-        { icon: <Eye className="w-6 h-6" />, title: 'Visión Artificial', desc: 'Detección automática de humo y fuego con IA' },
-        { icon: <Radio className="w-6 h-6" />, title: 'Monitoreo 24/7', desc: 'Vigilancia continua sin intervención humana' },
-        { icon: <Shield className="w-6 h-6" />, title: 'Alerta Temprana', desc: 'Notificación inmediata a autoridades municipales' },
-    ];
 
     return (
         <section id="demo-intro" className="relative min-h-screen flex items-center justify-center py-20 px-4 overflow-hidden">
@@ -62,48 +56,8 @@ const DemoIntro = () => {
                     Monitoreo Inteligente en Tiempo Real para Municipios
                 </motion.p>
 
-                {/* Description */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                    className="max-w-3xl mx-auto mb-16"
-                >
-                    <div className="glass-panel rounded-2xl p-8 border border-white/5">
-                        <p className="text-[#F5F6FA]/80 text-lg leading-relaxed text-center">
-                            El <strong className="text-white">Sistema de Alerta de Incendios (SAI)</strong> es una plataforma
-                            de detección temprana de incendios forestales basada en inteligencia artificial,
-                            cámaras panorámicas y monitoreo automatizado en tiempo real.
-                        </p>
-                        <p className="text-[#F5F6FA]/60 text-base leading-relaxed text-center mt-4">
-                            Actualmente operativo en <strong className="text-[#00FF9D]">Córdoba, Argentina</strong>,
-                            donde ha detectado múltiples focos reales, incluyendo eventos a más de
-                            <strong className="text-[#FF5C00]"> 30 km</strong> de distancia.
-                        </p>
-                    </div>
-                </motion.div>
 
-                {/* Feature Cards */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 max-w-4xl mx-auto"
-                >
-                    {features.map((f, i) => (
-                        <motion.div
-                            key={i}
-                            whileHover={{ y: -4, scale: 1.02 }}
-                            className="glass-panel rounded-xl p-6 border border-white/5 text-center group hover:border-[#FF5C00]/30 transition-all duration-300"
-                        >
-                            <div className="inline-flex p-3 rounded-xl bg-[#FF5C00]/10 text-[#FF5C00] mb-4 group-hover:bg-[#FF5C00]/20 transition-colors">
-                                {f.icon}
-                            </div>
-                            <h3 className="text-white font-bold font-montserrat mb-2">{f.title}</h3>
-                            <p className="text-[#F5F6FA]/60 text-sm">{f.desc}</p>
-                        </motion.div>
-                    ))}
-                </motion.div>
+
 
                 {/* CTA Button */}
                 <motion.div

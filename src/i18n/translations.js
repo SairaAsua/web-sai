@@ -213,6 +213,18 @@ const translations = {
           subtitle: "Hitos en el desarrollo de hardware nacional",
           category: "Desarrollo",
           content: "Alcanzar el diseño final de nuestro primer prototipo de nodo operativo ha sido un viaje de iteración constante y aprendizaje..."
+        },
+        post8: {
+          title: "SAI libera su primer conjunto de datos de detección de humo",
+          subtitle: "Publicación del SAINetset v8.0 para la comunidad científica",
+          category: "Ciencia Abierta",
+          content: "En el marco de nuestro compromiso con la ciencia abierta y la colaboración, hoy publicamos el SAINetset v8.0, el primer conjunto de datos de imágenes obtenidas por los nodos de vigilancia del Sistema de Alerta de Incendios. Este dataset recoge 5 596 fotografías reales tomadas por las cámaras del SAI en Córdoba, Argentina. Todas las imágenes están disponibles en Hugging Face con licencia CC BY 4.0.\\n\\nEl conjunto se compone de 4 462 imágenes de entrenamiento y 1 134 de validación, de las cuales 245 corresponden a detecciones reales de humo/fuego y 5 351 son ejemplos negativos. Incluye cuatro tipos de contenidos: detecciones verdaderas de humo, falsos positivos difíciles, imágenes sintéticas y fotografías donadas.\\n\\nAl publicar este conjunto de datos abrimos la puerta a que más personas puedan replicar y mejorar nuestros modelos de detección temprana. ¡Te invitamos a descargarlo en Hugging Face!"
+        },
+        post9: {
+          title: "Primera detección desde dos nodos: incendio controlado",
+          subtitle: "Hito de triangulación visual desde La Serranita y La Rancherita",
+          category: "Hito Operativo",
+          content: "El 13 de febrero nuestro Sistema de Alerta de Incendios alcanzó un hito: por primera vez, dos nodos SAInet registraron en simultáneo el mismo evento. Desde distintos sectores de la ciudad se observaba una columna de humo y se confirmó que en el depósito municipal ubicado al lado de la Laguna Sanitaria se estaban quemando restos de poda.\\n\\nLos nodos de La Serranita y La Rancherita detectaron la pluma casi al mismo tiempo, lo que nos permitió triangular la ubicación del foco y seguir su evolución desde dos ángulos diferentes. Gracias a las alertas georreferenciadas y a la perspectiva dual, pudimos confirmar que se trataba de una quema controlada y no de un incendio forestal."
         }
       }
     },
@@ -516,6 +528,18 @@ const translations = {
           subtitle: "Milestones in national hardware development",
           category: "Development",
           content: "Achieving the final design of our first operational node prototype has been a journey of constant iteration and learning..."
+        },
+        post8: {
+          title: "SAI releases its first smoke detection dataset",
+          subtitle: "SAINetset v8.0 released for the scientific community",
+          category: "Open Science",
+          content: "As part of our commitment to open science and collaboration, today we release SAINetset v8.0, the first dataset of images obtained by the Fire Alert System surveillance nodes. This dataset collects 5,596 real photos taken by SAI cameras in Córdoba, Argentina. All images are available on Hugging Face under CC BY 4.0 license.\\n\\nThe set consists of 4,462 training images and 1,134 validation images, of which 245 correspond to real smoke/fire detections. It includes true detections, hard false positives, synthetic images, and community donations.\\n\\nBy publishing this dataset, we open the door for more people to replicate and improve our early detection models. We invite you to download it on Hugging Face!"
+        },
+        post9: {
+          title: "First detection from two nodes: controlled fire",
+          subtitle: "Visual triangulation milestone from La Serranita and La Rancherita",
+          category: "Operational Milestone",
+          content: "On February 13, our Fire Alert System reached a milestone: for the first time, two SAInet nodes recorded the same event simultaneously. A smoke column was observed from different sectors, confirmed as a controlled burn of pruning remains at the municipal depot.\\n\\nThe La Serranita and La Rancherita nodes detected the plume almost simultaneously, allowing us to triangulate the location and follow its evolution from two different angles. Thanks to georeferenced alerts and dual perspective, we were able to confirm it was a controlled burn."
         }
       }
     },

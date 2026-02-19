@@ -81,6 +81,27 @@ const Blog = () => {
       category: t('blog.posts.post7.category'),
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/928dade598a3ff31e368737d69e1b926.jpg",
       content: t('blog.posts.post7.content')
+    },
+    {
+      id: 8,
+      title: t('blog.posts.post8.title'),
+      subtitle: t('blog.posts.post8.subtitle'),
+      date: "14 Ene 2026",
+      author: "Equipo SAI",
+      category: t('blog.posts.post8.category'),
+      image: "/images/sai-execution-426444.webp",
+      content: t('blog.posts.post8.content')
+    },
+    {
+      id: 9,
+      title: t('blog.posts.post9.title'),
+      subtitle: t('blog.posts.post9.subtitle'),
+      date: "13 Feb 2026",
+      author: "Operaciones",
+      category: t('blog.posts.post9.category'),
+      image: "/images/sai-execution-426129.webp",
+      content: t('blog.posts.post9.content'),
+      extraImages: ["/images/sai-execution-426129.webp", "/images/sai-execution-426444.webp"]
     }
   ];
 
@@ -103,7 +124,7 @@ const Blog = () => {
 
         <div className="flex flex-col gap-16 max-w-5xl mx-auto">
           {posts.map((post, index) => (
-            <motion.article 
+            <motion.article
               key={post.id}
               className="flex flex-col md:flex-row gap-8 bg-[#F5F6FA]/5 rounded-2xl overflow-hidden border border-[#F5F6FA]/10 hover:border-[#FF5C00]/30 transition-colors duration-300 shadow-xl"
               initial={{ opacity: 0, y: 50 }}
@@ -112,9 +133,9 @@ const Blog = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <div className="w-full md:w-2/5 h-64 md:h-auto relative overflow-hidden flex-shrink-0">
-                <img 
-                  src={post.image} 
-                  alt={post.title} 
+                <img
+                  src={post.image}
+                  alt={post.title}
                   className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute top-4 left-4">
@@ -148,6 +169,19 @@ const Blog = () => {
                     {post.content.split('\n').filter(p => p.trim() !== '').map((paragraph, idx) => (
                       <p key={idx}>{paragraph}</p>
                     ))}
+
+                    {post.extraImages && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        {post.extraImages.map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img}
+                            alt={`${post.title} - extra ${idx + 1}`}
+                            className="w-full h-48 object-cover rounded-lg border border-[#F5F6FA]/20"
+                          />
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -160,7 +194,7 @@ const Blog = () => {
                       </div>
                     ))}
                   </div>
-                  <button 
+                  <button
                     onClick={() => toggleExpand(post.id)}
                     className="text-[#FF5C00] text-sm font-bold flex items-center gap-1 hover:opacity-80 transition-opacity"
                   >

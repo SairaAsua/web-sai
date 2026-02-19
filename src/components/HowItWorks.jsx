@@ -47,7 +47,7 @@ const HowItWorks = () => {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
             {/* Video - Izquierda */}
             <motion.div
@@ -59,7 +59,7 @@ const HowItWorks = () => {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#FF5C00]/30 w-full max-w-sm aspect-[3/4] md:max-w-md lg:max-w-lg">
                 <iframe
-                  src="https://www.youtube.com/embed/YIbfggWz_fQ?autoplay=1&mute=1&loop=1&playlist=YIbfggWz_fQ&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&fs=0"
+                  src="https://www.youtube.com/embed/8WMtN7siAA4?autoplay=1&mute=1&loop=1&playlist=8WMtN7siAA4&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&fs=0"
                   title="SAINet detectando humo en tiempo real"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen={false}
@@ -132,7 +132,7 @@ const HowItWorks = () => {
       {/* Embedded EarlyAlert Content */}
       <section className="py-24 bg-[#09221D] relative overflow-hidden border-t border-[#F5F6FA]/5">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             className="max-w-5xl mx-auto text-center mb-16"
@@ -144,11 +144,11 @@ const HowItWorks = () => {
             <div className="inline-flex items-center justify-center p-3 mb-6 rounded-full bg-[#FF5C00]/10 border border-[#FF5C00]/20">
               <AlertTriangle className="w-8 h-8 text-[#FF5C00]" />
             </div>
-            
+
             <h2 className="text-3xl md:text-5xl font-bold font-montserrat text-white mb-6">
               {t('howItWorks.earlyAlert.title')}
             </h2>
-            
+
             <blockquote className="text-lg md:text-2xl text-[#F5F6FA] font-light leading-relaxed font-roboto italic border-l-4 border-[#FF5C00] pl-6 py-2 text-left md:text-center md:border-l-0 md:border-t-4 md:pt-8 bg-[#0B2822] md:bg-transparent p-4 rounded-r-xl md:rounded-none">
               {t('howItWorks.earlyAlert.quote')}
               <footer className="mt-4 text-sm uppercase tracking-wider not-italic">
@@ -179,15 +179,15 @@ const HowItWorks = () => {
                   {t('howItWorks.earlyAlert.activeDetection')}
                 </span>
               </div>
-              
-              <img 
-                src="https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/48d22b045ba547c2c77e6daa90f38192.png" 
-                alt="Detección de humo por inteligencia artificial en sierras de Córdoba" 
+
+              <img
+                src="https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/48d22b045ba547c2c77e6daa90f38192.png"
+                alt="Detección de humo por inteligencia artificial en sierras de Córdoba"
                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
-              
+
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B2822] via-transparent to-transparent opacity-60"></div>
-              
+
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <div className="flex items-center gap-2 text-[#FF5C00] mb-2">
                   <Eye className="w-4 h-4" />
@@ -213,16 +213,16 @@ const HowItWorks = () => {
                 </span>
               </div>
 
-              <img 
-                src="https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/3ea795d142fa11c8bab2730c3ddb65b2.jpg" 
-                alt="Paisaje de sierras monitoreado por cámara Reolink" 
+              <img
+                src="https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/3ea795d142fa11c8bab2730c3ddb65b2.jpg"
+                alt="Paisaje de sierras monitoreado por cámara Reolink"
                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
 
-               <div className="absolute inset-0 bg-gradient-to-t from-[#0B2822] via-transparent to-transparent opacity-60"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B2822] via-transparent to-transparent opacity-60"></div>
 
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                 <div className="flex items-center gap-2 text-[#25D366] mb-2">
+                <div className="flex items-center gap-2 text-[#25D366] mb-2">
                   <ShieldCheck className="w-4 h-4" />
                   <span className="text-xs font-mono">{t('howItWorks.earlyAlert.systemStatus')}</span>
                 </div>
