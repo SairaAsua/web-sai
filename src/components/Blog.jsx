@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, User, Tag, ArrowRight } from 'lucide-react';
+import { Calendar, User, Tag, ArrowRight, Filter } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const Blog = () => {
@@ -18,7 +18,7 @@ const Blog = () => {
       subtitle: t('blog.posts.post1.subtitle'),
       date: "15 Oct 2024",
       author: "Equipo SAI",
-      category: t('blog.posts.post1.category'),
+      category: "Eventos",
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/64ce67e004469ba3fe8f1d383c2898da.jpg",
       content: t('blog.posts.post1.content')
     },
@@ -28,7 +28,7 @@ const Blog = () => {
       subtitle: t('blog.posts.post2.subtitle'),
       date: "02 Nov 2024",
       author: "Coordinación Operativa",
-      category: t('blog.posts.post2.category'),
+      category: "Infraestructura",
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/c61d85d5896354e70ec1c8cfbf0c8465.jpg",
       content: t('blog.posts.post2.content')
     },
@@ -38,7 +38,7 @@ const Blog = () => {
       subtitle: t('blog.posts.post3.subtitle'),
       date: "20 Nov 2024",
       author: "Ingeniería de Campo",
-      category: t('blog.posts.post3.category'),
+      category: "Infraestructura",
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/8f2c8e494d75647a70b619506dcac2ff.jpg",
       content: t('blog.posts.post3.content')
     },
@@ -48,7 +48,7 @@ const Blog = () => {
       subtitle: t('blog.posts.post4.subtitle'),
       date: "05 Dic 2024",
       author: "Comunicación",
-      category: t('blog.posts.post4.category'),
+      category: "Eventos",
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/1aa11020391405276389ceeadbd20f04.jpg",
       content: t('blog.posts.post4.content')
     },
@@ -58,7 +58,7 @@ const Blog = () => {
       subtitle: t('blog.posts.post5.subtitle'),
       date: "10 Dic 2024",
       author: "I+D",
-      category: t('blog.posts.post5.category'),
+      category: "Eventos",
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/730526e1ac40d2fcb9515c16e2c1f5a7.jpg",
       content: t('blog.posts.post5.content')
     },
@@ -68,7 +68,7 @@ const Blog = () => {
       subtitle: t('blog.posts.post6.subtitle'),
       date: "15 Dic 2024",
       author: "Impacto Social",
-      category: t('blog.posts.post6.category'),
+      category: "Eventos",
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/edbd160e77013769c0caedc647277d16.jpg",
       content: t('blog.posts.post6.content')
     },
@@ -78,7 +78,7 @@ const Blog = () => {
       subtitle: t('blog.posts.post7.subtitle'),
       date: "20 Dic 2024",
       author: "Ingeniería",
-      category: t('blog.posts.post7.category'),
+      category: "Hitos",
       image: "https://horizons-cdn.hostinger.com/a9cf557e-e310-48ca-81f8-588f294b0695/928dade598a3ff31e368737d69e1b926.jpg",
       content: t('blog.posts.post7.content')
     },
@@ -88,8 +88,8 @@ const Blog = () => {
       subtitle: t('blog.posts.post8.subtitle'),
       date: "14 Ene 2026",
       author: "Equipo SAI",
-      category: t('blog.posts.post8.category'),
-      image: "/images/sai-execution-426444.webp",
+      category: "Hitos",
+      image: "/images/11.png",
       content: t('blog.posts.post8.content')
     },
     {
@@ -98,18 +98,27 @@ const Blog = () => {
       subtitle: t('blog.posts.post9.subtitle'),
       date: "13 Feb 2026",
       author: "Operaciones",
-      category: t('blog.posts.post9.category'),
+      category: "Hitos",
       image: "/images/sai-execution-426129.webp",
       content: t('blog.posts.post9.content'),
       extraImages: ["/images/sai-execution-426129.webp", "/images/sai-execution-426444.webp"]
     }
   ];
 
+  // Order newest first
+  const sortedPosts = [...posts].reverse();
+
+  const categories = ['Eventos', 'Infraestructura', 'Hitos'];
+  const [activeCategory, setActiveCategory] = React.useState(null);
+  const filteredPosts = activeCategory
+    ? sortedPosts.filter(p => p.category === activeCategory)
+    : sortedPosts;
+
   return (
     <section className="py-24 bg-[#0B2822] min-h-screen">
       <div className="container mx-auto px-4">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -122,88 +131,131 @@ const Blog = () => {
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-16 max-w-5xl mx-auto">
-          {posts.map((post, index) => (
-            <motion.article
-              key={post.id}
-              className="flex flex-col md:flex-row gap-8 bg-[#F5F6FA]/5 rounded-2xl overflow-hidden border border-[#F5F6FA]/10 hover:border-[#FF5C00]/30 transition-colors duration-300 shadow-xl"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <div className="w-full md:w-2/5 h-64 md:h-auto relative overflow-hidden flex-shrink-0">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-[#FF5C00] text-white text-xs font-bold px-3 py-1 rounded shadow-lg uppercase tracking-wider font-mono">
-                    {post.category}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex-1 p-6 md:p-8 flex flex-col">
-                <div className="flex items-center gap-4 text-xs font-mono text-[#F5F6FA]/50 mb-4">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    <span>{post.date}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <User className="w-3 h-3" />
-                    <span>{post.author}</span>
+        <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
+          {/* Posts */}
+          <div className="flex-1 flex flex-col gap-12">
+            {filteredPosts.map((post, index) => (
+              <motion.article
+                key={post.id}
+                className="flex flex-col md:flex-row gap-8 bg-[#F5F6FA]/5 rounded-2xl overflow-hidden border border-[#F5F6FA]/10 hover:border-[#FF5C00]/30 transition-colors duration-300 shadow-xl"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className="w-full md:w-2/5 h-64 md:h-auto relative overflow-hidden flex-shrink-0">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-[#FF5C00] text-white text-xs font-bold px-3 py-1 rounded shadow-lg uppercase tracking-wider font-mono">
+                      {post.category}
+                    </span>
                   </div>
                 </div>
 
-                <h2 className="text-2xl md:text-3xl font-bold font-montserrat text-white mb-2 leading-tight">
-                  {post.title}
-                </h2>
-                <h3 className="text-lg text-[#FF5C00] font-medium mb-6 font-roboto">
-                  {post.subtitle}
-                </h3>
-
-                {expandedPosts[post.id] && (
-                  <div className="text-[#F5F6FA]/80 font-roboto leading-relaxed space-y-4 text-sm md:text-base mb-6">
-                    {post.content.split('\n').filter(p => p.trim() !== '').map((paragraph, idx) => (
-                      <p key={idx}>{paragraph}</p>
-                    ))}
-
-                    {post.extraImages && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        {post.extraImages.map((img, idx) => (
-                          <img
-                            key={idx}
-                            src={img}
-                            alt={`${post.title} - extra ${idx + 1}`}
-                            className="w-full h-48 object-cover rounded-lg border border-[#F5F6FA]/20"
-                          />
-                        ))}
-                      </div>
-                    )}
+                <div className="flex-1 p-6 md:p-8 flex flex-col">
+                  <div className="flex items-center gap-4 text-xs font-mono text-[#F5F6FA]/50 mb-4">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      <span>{post.date}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <User className="w-3 h-3" />
+                      <span>{post.author}</span>
+                    </div>
                   </div>
-                )}
 
-                <div className="mt-auto pt-6 border-t border-[#F5F6FA]/10 flex items-center justify-between">
-                  <div className="flex gap-2">
-                    {['SAI', 'Tecnología', post.category].map((tag, i) => (
-                      <div key={i} className="flex items-center gap-1 text-[10px] bg-[#F5F6FA]/5 px-2 py-1 rounded-full text-[#F5F6FA]/60">
-                        <Tag className="w-3 h-3" />
-                        {tag}
-                      </div>
-                    ))}
+                  <h2 className="text-2xl md:text-3xl font-bold font-montserrat text-white mb-2 leading-tight">
+                    {post.title}
+                  </h2>
+                  <h3 className="text-lg text-[#FF5C00] font-medium mb-6 font-roboto">
+                    {post.subtitle}
+                  </h3>
+
+                  {expandedPosts[post.id] && (
+                    <div className="text-[#F5F6FA]/80 font-roboto leading-relaxed space-y-4 text-sm md:text-base mb-6">
+                      {post.content.split('\n').filter(p => p.trim() !== '').map((paragraph, idx) => (
+                        <p key={idx}>{paragraph}</p>
+                      ))}
+
+                      {post.extraImages && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                          {post.extraImages.map((img, idx) => (
+                            <img
+                              key={idx}
+                              src={img}
+                              alt={`${post.title} - extra ${idx + 1}`}
+                              className="w-full h-48 object-cover rounded-lg border border-[#F5F6FA]/20"
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="mt-auto pt-6 border-t border-[#F5F6FA]/10 flex items-center justify-between">
+                    <div className="flex gap-2">
+                      {['SAI', post.category].map((tag, i) => (
+                        <div key={i} className="flex items-center gap-1 text-[10px] bg-[#F5F6FA]/5 px-2 py-1 rounded-full text-[#F5F6FA]/60">
+                          <Tag className="w-3 h-3" />
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => toggleExpand(post.id)}
+                      className="text-[#FF5C00] text-sm font-bold flex items-center gap-1 hover:opacity-80 transition-opacity"
+                    >
+                      {expandedPosts[post.id] ? t('blog.close') : t('blog.readMore')} <ArrowRight className="w-4 h-4" />
+                    </button>
                   </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          {/* Sidebar - Category Filter */}
+          <div className="lg:w-56 flex-shrink-0 order-first lg:order-last">
+            <div className="sticky top-24">
+              <div className="rounded-2xl bg-[#F5F6FA]/5 border border-[#F5F6FA]/10 p-5 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-white/60 text-xs font-mono uppercase tracking-widest mb-4">
+                  <Filter className="w-3.5 h-3.5" />
+                  Categorías
+                </div>
+                <div className="flex flex-col gap-2">
                   <button
-                    onClick={() => toggleExpand(post.id)}
-                    className="text-[#FF5C00] text-sm font-bold flex items-center gap-1 hover:opacity-80 transition-opacity"
+                    onClick={() => setActiveCategory(null)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-montserrat font-bold transition-all ${!activeCategory
+                        ? 'bg-[#FF5C00] text-white'
+                        : 'text-white/60 hover:bg-white/5 hover:text-white'
+                      }`}
                   >
-                    {expandedPosts[post.id] ? t('blog.close') : t('blog.readMore')} <ArrowRight className="w-4 h-4" />
+                    Todos
+                    <span className="ml-auto float-right font-mono text-xs opacity-60">{sortedPosts.length}</span>
                   </button>
+                  {categories.map(cat => {
+                    const count = sortedPosts.filter(p => p.category === cat).length;
+                    return (
+                      <button
+                        key={cat}
+                        onClick={() => setActiveCategory(activeCategory === cat ? null : cat)}
+                        className={`w-full text-left px-3 py-2 rounded-lg text-sm font-montserrat font-bold transition-all ${activeCategory === cat
+                            ? 'bg-[#FF5C00] text-white'
+                            : 'text-white/60 hover:bg-white/5 hover:text-white'
+                          }`}
+                      >
+                        {cat}
+                        <span className="ml-auto float-right font-mono text-xs opacity-60">{count}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-            </motion.article>
-          ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

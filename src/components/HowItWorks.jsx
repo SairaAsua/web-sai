@@ -58,13 +58,14 @@ const HowItWorks = () => {
               className="flex justify-center lg:justify-end"
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#FF5C00]/30 w-full max-w-sm aspect-[3/4] md:max-w-md lg:max-w-lg">
-                <iframe
-                  src="https://www.youtube.com/embed/8WMtN7siAA4?autoplay=1&mute=1&loop=1&playlist=8WMtN7siAA4&controls=0&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&fs=0"
-                  title="SAINet detectando humo en tiempo real"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen={false}
-                  className="w-full h-full"
-                ></iframe>
+                <video
+                  src="/videos/final-video.mp4"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
               </div>
             </motion.div>
 

@@ -14,7 +14,7 @@ const useKeyboardNavigation = () => {
         '/quienes-somos',
         '/blog',
         '/contacto',
-        '/sai',
+
         '/demo'
     ];
 

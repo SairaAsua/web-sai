@@ -19,7 +19,7 @@ import PresentationSlide from '@/components/PresentationSlide';
 import SaiNodes from '@/components/SaiNodes';
 import Terms from '@/components/Terms';
 import { Toaster } from '@/components/ui/toaster';
-import SaiPage from '@/pages/SaiNewPage';
+
 import DemoPage from '@/pages/DemoPage';
 import useKeyboardNavigation from '@/hooks/useKeyboardNavigation';
 
@@ -57,7 +57,7 @@ function App() {
             <Route path="/contacto" element={<Contact />} />
             <Route path="/presentacion" element={<PresentationSlide />} />
             <Route path="/terminos" element={<Terms />} />
-            <Route path="/sai" element={<SaiPage />} />
+
             <Route path="/demo" element={<DemoPage />} />
           </Routes>
         </main>

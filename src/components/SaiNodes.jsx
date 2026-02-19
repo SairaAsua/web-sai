@@ -57,13 +57,8 @@ const SaiNodes = () => {
               {t('saiNodes.description')}
             </motion.p>
 
-            <div className="max-w-xl">
-              <div className="flex items-center gap-2 mb-4 text-[#00FF9D] font-mono text-sm uppercase tracking-widest">
-                <Activity className="w-4 h-4 animate-pulse" />
-                {t('saiNodes.liveSim') || 'Simulación en Tiempo Real'}
-              </div>
-              <LiveStats />
-            </div>
+
+
           </motion.div>
 
           {/* Image Content */}
@@ -77,7 +72,7 @@ const SaiNodes = () => {
             <div className="absolute inset-0 bg-[#00FF9D]/20 filter blur-3xl transform scale-75 rounded-full animate-pulse-slow" />
 
             <motion.img
-              src="/images/sai_renders_1304.png"
+              src="/images/sai_renders_1301.png"
               alt="Nodo SAI - Sistema de Alerta Temprana"
               className="relative w-full max-w-lg lg:max-w-xl h-auto object-contain z-10 drop-shadow-2xl"
               animate={{ y: [0, -15, 0] }}
