@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapContainer, TileLayer, Circle, Marker, Polygon, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Circle, Marker, Polygon, useMapEvents, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { MapPin, Crosshair, SquareAsterisk } from 'lucide-react';
+import { MapPin, Crosshair, SquareAsterisk, Search, X } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 
 const installIcon = new L.DivIcon({
@@ -58,9 +58,28 @@ const ClickHandler = ({ onMapClick }) => {
     return null;
 };
 
+// Component to fly map to a position
+const FlyToPosition = ({ position, zoom }) => {
+    const map = useMap();
+    useEffect(() => {
+        if (position) {
+            map.flyTo(position, zoom || 13, { duration: 1.5 });
+        }
+    }, [position, zoom, map]);
+    return null;
+};
+
 const DemoMalagueno = () => {
     const [installPoint, setInstallPoint] = useState(null);
-    const [coverageRadius, setCoverageRadius] = useState(5000); // 5km default
+    const [coverageRadius, setCoverageRadius] = useState(5000);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+    const [showResults, setShowResults] = useState(false);
+    const [flyTarget, setFlyTarget] = useState(null);
+    const [selectedCity, setSelectedCity] = useState(null);
+    const searchRef = useRef(null);
+    const debounceRef = useRef(null);
 
     const malaguenoCtr = [-31.4633, -64.3583];
 
@@ -68,7 +87,66 @@ const DemoMalagueno = () => {
         setInstallPoint(latlng);
     }, []);
 
-    // Calculate approximate km² coverage
+    // Debounced search using Nominatim
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+
+        if (query.length < 3) {
+            setSearchResults([]);
+            setShowResults(false);
+            return;
+        }
+
+        debounceRef.current = setTimeout(async () => {
+            setIsSearching(true);
+            try {
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=ar&limit=5&accept-language=es`,
+                    { headers: { 'User-Agent': 'SAI-WebApp/1.0' } }
+                );
+                const data = await res.json();
+                setSearchResults(data);
+                setShowResults(true);
+            } catch (err) {
+                console.error('Nominatim error:', err);
+                setSearchResults([]);
+            } finally {
+                setIsSearching(false);
+            }
+        }, 400);
+    };
+
+    const handleSelectResult = (result) => {
+        const lat = parseFloat(result.lat);
+        const lon = parseFloat(result.lon);
+        setInstallPoint([lat, lon]);
+        setFlyTarget([lat, lon]);
+        setSelectedCity(result.display_name.split(',')[0]);
+        setSearchQuery(result.display_name.split(',').slice(0, 2).join(', '));
+        setShowResults(false);
+    };
+
+    const clearSearch = () => {
+        setSearchQuery('');
+        setSearchResults([]);
+        setShowResults(false);
+        setSelectedCity(null);
+    };
+
+    // Close results on outside click
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (searchRef.current && !searchRef.current.contains(e.target)) {
+                setShowResults(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
     const coverageKm2 = ((Math.PI * (coverageRadius / 1000) ** 2)).toFixed(1);
 
     return (
@@ -85,10 +163,10 @@ const DemoMalagueno = () => {
                     </span>
                     <h2 className="text-3xl md:text-5xl font-bold font-montserrat text-white">
                         ¿Cómo funcionaría el SAI en{' '}
-                        <span className="text-[#00FF9D]">tu ciudad</span>?
+                        <span className="text-[#00FF9D]">{selectedCity || 'tu ciudad'}</span>?
                     </h2>
                     <p className="text-[#F5F6FA]/60 mt-4 text-lg max-w-2xl mx-auto">
-                        Hacé click en el mapa para elegir el punto de instalación del nodo SAI en tu municipio
+                        Buscá tu ciudad o hacé click en el mapa para elegir el punto de instalación
                     </p>
                 </motion.div>
 
@@ -100,15 +178,74 @@ const DemoMalagueno = () => {
                         viewport={{ once: true }}
                         className="lg:col-span-1 space-y-4"
                     >
+                        {/* City Search */}
+                        <div className="glass-panel rounded-xl p-5 border border-white/5" ref={searchRef}>
+                            <h3 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
+                                <Search className="w-4 h-4 text-[#00FF9D]" /> Buscar Ciudad
+                            </h3>
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={handleSearchChange}
+                                    onFocus={() => searchResults.length > 0 && setShowResults(true)}
+                                    placeholder="Ej: Mendoza, Bariloche..."
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#00FF9D]/50 focus:ring-1 focus:ring-[#00FF9D]/30 transition-all"
+                                />
+                                {searchQuery && (
+                                    <button
+                                        onClick={clearSearch}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                )}
+                                {isSearching && (
+                                    <div className="absolute right-8 top-1/2 -translate-y-1/2">
+                                        <div className="w-4 h-4 border-2 border-[#00FF9D]/30 border-t-[#00FF9D] rounded-full animate-spin" />
+                                    </div>
+                                )}
+
+                                {/* Dropdown */}
+                                <AnimatePresence>
+                                    {showResults && searchResults.length > 0 && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: -5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -5 }}
+                                            className="absolute z-50 top-full left-0 right-0 mt-1 bg-[#0B2822] border border-white/10 rounded-lg overflow-hidden shadow-2xl"
+                                        >
+                                            {searchResults.map((result, i) => (
+                                                <button
+                                                    key={result.place_id || i}
+                                                    onClick={() => handleSelectResult(result)}
+                                                    className="w-full text-left px-3 py-2.5 text-sm text-white/70 hover:bg-[#00FF9D]/10 hover:text-white transition-colors border-b border-white/5 last:border-b-0 flex items-start gap-2"
+                                                >
+                                                    <MapPin className="w-3.5 h-3.5 text-[#00FF9D] mt-0.5 flex-shrink-0" />
+                                                    <span className="line-clamp-2">{result.display_name}</span>
+                                                </button>
+                                            ))}
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+
+                                {showResults && searchResults.length === 0 && searchQuery.length >= 3 && !isSearching && (
+                                    <div className="absolute z-50 top-full left-0 right-0 mt-1 bg-[#0B2822] border border-white/10 rounded-lg p-3 text-white/40 text-sm text-center">
+                                        No se encontraron resultados
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
                         {/* Instructions */}
                         <div className="glass-panel rounded-xl p-5 border border-white/5">
                             <h3 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
                                 <MapPin className="w-4 h-4 text-[#00FF9D]" /> Instrucciones
                             </h3>
                             <ol className="text-white/60 text-sm space-y-2 list-decimal list-inside">
-                                <li>Hacé click en el mapa para elegir ubicación</li>
+                                <li>Buscá una ciudad o hacé click en el mapa</li>
                                 <li>Ajustá el radio de cobertura</li>
-                                <li>Observá las zonas de riesgo cubiertas</li>
+                                <li>Observá las zonas cubiertas</li>
                             </ol>
                         </div>
 
@@ -174,7 +311,7 @@ const DemoMalagueno = () => {
                         {!installPoint && (
                             <div className="glass-panel rounded-xl p-5 border border-white/5 text-center">
                                 <p className="text-white/40 text-sm">
-                                    👆 Hacé click en el mapa para comenzar la simulación
+                                    👆 Buscá una ciudad o hacé click en el mapa
                                 </p>
                             </div>
                         )}
@@ -201,6 +338,7 @@ const DemoMalagueno = () => {
                                 />
 
                                 <ClickHandler onMapClick={handleMapClick} />
+                                <FlyToPosition position={flyTarget} zoom={13} />
 
                                 {/* Risk zones */}
                                 {riskZones.map((zone, i) => (
